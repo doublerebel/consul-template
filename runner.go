@@ -822,7 +822,7 @@ func atomicWrite(path string, contents []byte, perms os.FileMode, backup bool) e
 		}
 	}
 
-	f, err := ioutil.TempFile(parent, "")
+	f, err := ioutil.TempFile(os.TempDir(), "")
 	if err != nil {
 		return err
 	}
@@ -854,7 +854,7 @@ func atomicWrite(path string, contents []byte, perms os.FileMode, backup bool) e
 		}
 	}
 
-	if err := os.Rename(f.Name(), path); err != nil {
+	if err := copyFile(f.Name(), path); err != nil {
 		return err
 	}
 
